@@ -3,6 +3,11 @@ from django.db import models
 from django.utils import timezone
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status='published')
+
+
 class Post(models.Model):
     STATUS_CHOICE = (
         ('draft', 'Draft'),
@@ -31,8 +36,14 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='draft')
 
+    """
+    添加自定义manager前，需要显示地声明默认manager是谁
+    """
+    objects = models.Manager()  # The default manager
+    published = PublishedManager()  # Our custom manager.
+
     class Meta:
-        ordering = ['-publish'] # 降序排序：日期由近及远
+        ordering = ['-publish']  # 降序排序：日期由近及远
 
     def __str__(self):
         return self.title
