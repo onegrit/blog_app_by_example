@@ -17,3 +17,16 @@
  - Create a view in the views.py file that handles the posted data and sends the email
  - Add a URL pattern for the new view in the urls.py file of the blog application
  - Create a template to display the form
+ 
+## Creating a comment system
+  - 显示comments总数
+  - 显示comment 列表
+  - 显示空的comment准备接收用户提交Comment
+  思路：
+  You will create a comment system wherein users will be able to comment on posts.
+  To build the comment system, you need to do the following:
+  - Create a model to save comments
+  - Create a form to submit comments and validate the input data.
+  - Add a view that process the form and saves a new comment to the database.
+  - Edit the post detail to display the list of comments and the form to add a new comment.
+   
