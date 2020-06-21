@@ -6,6 +6,7 @@ from django.views.generic import ListView
 from blog.forms import EmailPostForm, CommentForm
 from blog.models import Post, Comment
 from taggit.models import Tag
+from django.db.models import Count
 
 
 def post_list(request, tag_slug=None):
@@ -62,12 +63,18 @@ def post_detail(request, year, month, day, post):
             return redirect(post.get_absolute_url())
     else:  # 如果是GET请求就构建一个空的Comment传递给模板
         comment_form = CommentForm()
+
+    # List of similar posts
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
     return render(request,
                   'blog/post/detail.html',
                   {'post': post,
                    'comments': comments,
                    'new_comment': new_comment,
                    'comment_form': comment_form,
+                   'similar_posts': similar_posts,
                    })
 
 

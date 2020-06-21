@@ -41,3 +41,18 @@ tags contained in a given list, which, in your case, contains only one element. 
 when multiple objects of a model are associated with multiple objects of another model. In your application, a post can have multiple tags and a
 tag can be related to multiple posts.
 ## 检索类似的帖子
+    Now that you have implemented tagging for your blog posts, you can do many
+    interesting things with tags. Tags allow you to categorize posts in a non-hierarchical
+    manner. Posts about similar topics will have several tags in common. You will build
+    a functionality to display similar posts by the number of tags they share. In this way,
+    when a user reads a post, you can suggest to them that they read other related posts.
+    In order to retrieve similar posts for a specific post, you need to perform the
+    following steps:
+    1. Retrieve all tags for the current post 检索与当前post相关的所有tag
+    2. Get all posts that are tagged with any of those tags 获取所有与tag相关的post
+    3. Exclude the current post from that list to avoid recommending the same post 排除当前post，避免重复推荐相同的post
+    4. Order the results by the number of tags shared with the current post 按照共同tag数量排序
+    5. In the case of two or more posts with the same number of tags, recommend the most recent post如果两个或多个post与当前post
+    的tag数量相同，推荐最近的post
+    6. Limit the query to the number of posts you want to recommend 限制你想推荐的post的查询数量
+    
