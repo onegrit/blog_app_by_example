@@ -29,4 +29,15 @@
   - Create a form to submit comments and validate the input data.
   - Add a view that process the form and saves a new comment to the database.
   - Edit the post detail to display the list of comments and the form to add a new comment.
-   
+## Tagging Posts
+   需求：
+    - 用户可以列出（过滤）与打了该Tag的所有Posts
+   思路：
+   - It takes an optional tag_slug parameter that has a None default value. This parameter will be passed in the URL.
+   - Inside the view, you build the initial QuerySet, retrieving all published posts, and if there is a given tag slug, 
+   you get the Tag object with the given slug using the get_object_or_404() shortcut.
+   - Then, you filter the list of posts by the ones that contain the given tag. Since this is a many-to-many relationship, you have to filter posts by
+tags contained in a given list, which, in your case, contains only one element. You use the __in field lookup. Many-to-many relationships occur
+when multiple objects of a model are associated with multiple objects of another model. In your application, a post can have multiple tags and a
+tag can be related to multiple posts.
+## 检索类似的帖子

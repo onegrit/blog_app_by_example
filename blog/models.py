@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 class PublishedManager(models.Manager):
@@ -36,7 +37,7 @@ class Post(models.Model):
     # 更新时间： 帖子最后一次更新时间，当保存一个对象时，会自动更新时间戳
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='draft')
-
+    tags = TaggableManager()
     """
     添加自定义manager前，需要显示地声明默认manager是谁
     """
